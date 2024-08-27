@@ -1,34 +1,16 @@
-import Navbar from "../components/navbar";
+import Navbar from "../../components/navbar";
 import Image from "next/image";
-import ProductCard from "../components/product-card";
-
+import ProductCard from "../../components/product-card";
+import { fetchProducts } from "@/app/utils/fetch-product";
 import { GetStaticProps } from "next";
 
 interface ProductsPageProps {
   products: Product[];
 }
 
-// export const getStaticProps: GetStaticProps<ProductsPageProps> = async () => {
-//   const res = await fetch("https://fakestoreapi.com/products");
-//   const products: Product[] = await res.json();
-//   console.log(products, "heye");
-//   return {
-//     props: {
-//       products,
-//     },
-//   };
-// };
+export default async function Home() {
+  const products = await fetchProducts();
 
-export const getStaticProps: GetStaticProps = async () => {
-  console.log("getStaticProps is running");
-  return {
-    props: {
-      products: [],
-    },
-  };
-};
-
-export default function Home({ products }: ProductsPageProps) {
   return (
     <>
       <div className="flex flex-col gap-5">
@@ -61,7 +43,7 @@ export default function Home({ products }: ProductsPageProps) {
           <h2 className="text-4xl text-orange-500 font-semibold text-center">
             Latest Product
           </h2>
-          <ProductCard products={products} /> <p>www</p>
+          <ProductCard products={products} />
           <hr className="mt-4 text-bold text-red-900" />
         </section>
       </div>
