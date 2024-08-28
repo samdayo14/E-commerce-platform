@@ -2,11 +2,7 @@ import Navbar from "../../components/navbar";
 import Image from "next/image";
 import ProductCard from "../../components/product-card";
 import { fetchProducts } from "@/app/utils/fetch-product";
-import { GetStaticProps } from "next";
-
-interface ProductsPageProps {
-  products: Product[];
-}
+import Link from "next/link";
 
 export default async function Home() {
   const products = await fetchProducts();
@@ -40,12 +36,11 @@ export default async function Home() {
           </div>
         </section>
         <section className="">
-          <h2 className="text-4xl text-orange-500 font-semibold text-center">
-            Latest Product
-          </h2>
+          
           <ProductCard products={products} />
           <hr className="mt-4 text-bold text-red-900" />
         </section>
+        <Link href="/pages/product">ProductsPageProps</Link>
       </div>
     </>
   );
