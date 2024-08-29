@@ -17,7 +17,7 @@ function Navbar() {
   const routes = [
     { page: "Home", href: "/" },
     { page: "Products", href: "/product" },
-    { page: "Carts", href: "/cart", count: 3 },
+    { page: "Product Management", href: "/product-management" },
   ];
 
   return (
@@ -37,11 +37,6 @@ function Navbar() {
             >
               {item.page}
             </Link>
-            {item.page === "Carts" && (
-              <span className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                {item.count}
-              </span>
-            )}
           </li>
         ))}
       </ul>
