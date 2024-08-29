@@ -17,14 +17,17 @@ function Navbar() {
   const routes = [
     { page: "Home", href: "/" },
     { page: "Products", href: "/product" },
-    { page: "Carts", href: "/carts", count: 3 },
+    { page: "Carts", href: "/cart", count: 3 },
   ];
 
   return (
     <nav className="py-10 px-4 flex justify-between mb-24">
-      <h1 className="font-semibold text-3xl text-orange-500 cursor-pointer">
-        Sam's Collection
-      </h1>
+      <Link
+        href="/"
+        className="font-semibold text-3xl text-orange-500 cursor-pointer"
+      >
+        Sam&apos;s Collection
+      </Link>
       <ul className="flex gap-5">
         {routes.map((item, index) => (
           <li className="cursor-pointer relative" key={index}>

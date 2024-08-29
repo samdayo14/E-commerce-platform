@@ -10,3 +10,9 @@ export async function fetchCategories() {
   data.unshift("All");
   return data;
 }
+
+export async function fetchSingleProduct(id: number) {
+  const res = await fetch(`https://fakestoreapi.com/products/${id}`);
+  const data = await res.json();
+  return data;
+}

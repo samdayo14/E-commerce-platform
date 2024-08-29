@@ -1,8 +1,7 @@
-import Navbar from "../../components/navbar";
+import Navbar from "../components/navbar";
 import Image from "next/image";
-import ProductCard from "../../components/product-card";
+import ProductCard from "../components/product-card";
 import { fetchProducts } from "@/app/utils/fetch-product";
-import Link from "next/link";
 
 export default async function Home() {
   const products = await fetchProducts();
@@ -36,11 +35,9 @@ export default async function Home() {
           </div>
         </section>
         <section className="">
-          
           <ProductCard products={products} />
           <hr className="mt-4 text-bold text-red-900" />
         </section>
-        <Link href="/pages/product">ProductsPageProps</Link>
       </div>
     </>
   );

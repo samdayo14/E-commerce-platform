@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { fetchCategories, fetchProducts } from "../utils/fetch-product";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export interface Product {
   id: number;
@@ -11,6 +12,9 @@ export interface Product {
   description: string;
   price: string;
   category: string;
+  rating: {
+    rate: number;
+  };
 }
 
 interface ProductsPageProps {
@@ -91,9 +95,12 @@ export default function ProductCard({ products }: ProductsPageProps) {
               <p className="text-black text-xl font-bold pb-4">
                 ${product.price}
               </p>
-              <a className="text-xl cursor-pointer font-medium border border-black rounded-lg p-2 hover:bg-orange-500 hover:text-white">
-                Buy Now
-              </a>
+              <Link
+                href={`/product-details/${product.id}`}
+                className="text-xl cursor-pointer font-medium border border-black rounded-lg p-2 hover:bg-orange-500 hover:text-white"
+              >
+                View Product
+              </Link>
             </div>
           </div>
         ))}
