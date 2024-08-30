@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Input from "./input";
 import { addNewProduct } from "../utils/fetch-product";
+import { useProducts } from "../context/product-context";
 
 export default function ProductForm() {
+  const { addProduct } = useProducts();
   const [formData, setFormData] = useState({
     title: "",
     price: "",
@@ -12,6 +14,9 @@ export default function ProductForm() {
     category: 0,
     description: "",
     image: "",
+    rating: {
+      rate: 0
+    }
   });
   const [image, setImage] = useState<string | null>(null);
 
@@ -40,7 +45,9 @@ export default function ProductForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await addNewProduct(formData);
+      const newProduct = await addNewProduct(formData);
+      addProduct({ ...formData, id: newProduct.id });
+
     } catch (error) {
       console.error("Failed to add product", error);
     }

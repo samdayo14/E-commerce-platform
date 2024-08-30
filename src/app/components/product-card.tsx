@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { fetchCategories, fetchProducts } from "../utils/fetch-product";
 import { useEffect, useState } from "react";
+import { useProducts } from "../context/product-context";
+import { fetchCategories } from "../utils/fetch-product";
 import Link from "next/link";
 
 export interface Product {
@@ -11,20 +12,17 @@ export interface Product {
   image: string;
   description: string;
   price: string;
-  category: string;
+  category: number;
   rating: {
     rate: number;
   };
 }
 
-interface ProductsPageProps {
-  products: Product[];
-}
-
-export default function ProductCard({ products }: ProductsPageProps) {
+export default function ProductCard() {
+  const { products } = useProducts();
   const [categories, setCategories] = useState<string[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
-  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     async function getCategories() {
@@ -35,23 +33,23 @@ export default function ProductCard({ products }: ProductsPageProps) {
     getCategories();
   }, []);
 
-  async function filterProducts(category: string) {
-    const products: Product[] = await fetchProducts();
-    const data = products.filter(
-      (product: Product) => product.category === category
-    );
-    return data;
-  }
+  useEffect(() => {
+    setFilteredProducts(products);
+  }, [products]);
 
-  const handleFilterCategory = async (category: string) => {
-    setSelectedCategory(category);
-    if (category === "All") {
-      const allProducts = await fetchProducts();
-      setFilteredProducts(allProducts);
+  useEffect(() => {
+    if (selectedCategory === "All") {
+      setFilteredProducts(products);
     } else {
-      const filteredData = await filterProducts(category);
+      const filteredData = products.filter(
+        (product) => product.category.toString() === selectedCategory
+      );
       setFilteredProducts(filteredData);
     }
+  }, [selectedCategory, products]);
+
+  const handleFilterCategory = (category: string) => {
+    setSelectedCategory(category);
   };
 
   return (
