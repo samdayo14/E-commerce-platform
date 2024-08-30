@@ -11,12 +11,12 @@ export default function ProductForm() {
     title: "",
     price: "",
     id: 0,
-    category: 0,
+    category: "",
     description: "",
     image: "",
     rating: {
-      rate: 0
-    }
+      rate: 0,
+    },
   });
   const [image, setImage] = useState<string | null>(null);
 
@@ -46,13 +46,25 @@ export default function ProductForm() {
     e.preventDefault();
     try {
       const newProduct = await addNewProduct(formData);
+
       addProduct({ ...formData, id: newProduct.id });
 
+      setFormData({
+        title: "",
+        price: "",
+        id: 0,
+        category: "",
+        description: "",
+        image: "",
+        rating: {
+          rate: 0,
+        },
+      });
+      setImage(null);
     } catch (error) {
       console.error("Failed to add product", error);
     }
   };
-
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
       <h2 className="text-xl font-semibold mb-4">Add / Edit Product</h2>
@@ -84,13 +96,13 @@ export default function ProductForm() {
             name="category"
             value={formData.category}
             onChange={(e) =>
-              setFormData({ ...formData, category: Number(e.target.value) })
+              setFormData({ ...formData, category: e.target.value })
             }
           >
-            <option value={0}>Men Clothing</option>
-            <option value={1}>Women Clothing</option>
-            <option value={2}>Jewelry</option>
-            <option value={3}>Electronics</option>
+            <option value={"Men Clothing"}>Men Clothing</option>
+            <option value={"Women Clothing"}>Women Clothing</option>
+            <option value={"Jewelry"}>Jewelry</option>
+            <option value={"Electronics"}>Electronics</option>
           </select>
         </div>
         <div className="mb-4">

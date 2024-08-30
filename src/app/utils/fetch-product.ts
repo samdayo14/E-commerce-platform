@@ -4,7 +4,7 @@ export interface AddProduct {
   title: string;
   price: string;
   id: number;
-  category: number;
+  category: string;
   description: string;
   image: string;
 }

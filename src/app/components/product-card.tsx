@@ -1,5 +1,4 @@
 "use client";
-
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useProducts } from "../context/product-context";
@@ -12,7 +11,7 @@ export interface Product {
   image: string;
   description: string;
   price: string;
-  category: number;
+  category: string;
   rating: {
     rate: number;
   };
@@ -42,7 +41,7 @@ export default function ProductCard() {
       setFilteredProducts(products);
     } else {
       const filteredData = products.filter(
-        (product) => product.category.toString() === selectedCategory
+        (product) => product.category === selectedCategory
       );
       setFilteredProducts(filteredData);
     }
