@@ -88,7 +88,7 @@ function Navbar() {
         <ul
           className={`${
             menuOpen ? "flex" : "hidden"
-          } flex-col lg:flex lg:flex-row gap-5 lg:gap-10 lg:items-center absolute lg:static top-full left-0 w-full lg:w-auto bg-white shadow-md lg:bg-[#fcf8f5] lg:shadow-none px-4 lg:px-0 py-5 lg:py-0`}
+          } flex-col lg:flex lg:flex-row gap-5 lg:gap-10 lg:items-center absolute lg:static top-full left-0 w-full lg:w-auto bg-white shadow-md lg:bg-transparent lg:shadow-none px-4 lg:px-0 py-5 lg:py-0`}
         >
           {routes.map((item, index) => (
             <li className="cursor-pointer" key={index}>

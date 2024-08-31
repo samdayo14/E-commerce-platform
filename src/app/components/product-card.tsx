@@ -56,7 +56,7 @@ export default function ProductCard() {
       <h2 className="text-4xl text-orange-500 font-semibold text-center">
         Latest Product
       </h2>
-      <div className="flex md:gap-4 gap-2 justify-start overflow-x-auto mt-10 scrollbar-hide">
+      <div className="flex md:gap-4 gap-2 justify-start overflow-x-auto mt-10  md:justify-center">
         {categories.map((cat) => (
           <button
             className={`text-lg font-semibold border-2 border-solid border-black py-2 px-4 text-center rounded-lg ${

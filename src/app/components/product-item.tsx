@@ -17,7 +17,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   ) {
     // Assuming the image is from the public folder or is a relative path
     imageSrc = `/${imageSrc}`;
-    console.log("Image src:", product.image);
   }
   return (
     <li className="flex justify-between items-center p-4 border rounded shadow-sm cursor-pointer">
