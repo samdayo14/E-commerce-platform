@@ -20,7 +20,7 @@ export interface Product {
 export default function ProductCard() {
   const { products } = useProducts();
   const [categories, setCategories] = useState<string[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState(products);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
@@ -32,10 +32,7 @@ export default function ProductCard() {
     getCategories();
   }, []);
 
-  useEffect(() => {
-    setFilteredProducts(products);
-  }, [products]);
-
+  // Consolidate filtering logic into one effect
   useEffect(() => {
     if (selectedCategory === "All") {
       setFilteredProducts(products);
@@ -45,7 +42,7 @@ export default function ProductCard() {
       );
       setFilteredProducts(filteredData);
     }
-  }, [selectedCategory, products]);
+  }, [products, selectedCategory]);
 
   const handleFilterCategory = (category: string) => {
     setSelectedCategory(category);
@@ -71,36 +68,40 @@ export default function ProductCard() {
       </div>
 
       <div className="pt-7 grid-cols-2 grid md:grid-cols-2 md:ml-14 lg:grid-cols-4 md:gap-4 gap-2 text-center lg:ml-6">
-        {filteredProducts.map((product) => (
-          <div
-            key={product.id}
-            className="h-[100%] w-[200px] md:w-[285px] rounded overflow-hidden shadow-lg border border-gray-400"
-          >
-            <div className="h-[250px] w-[190px] mx-auto">
-              <Image
-                src={product.image}
-                alt={product.title}
-                width={100}
-                height={100}
-                layout="responsive"
-              />
-            </div>
-            <div className="px-6 py-4">
-              <div className="font-bold md:text-xl text-sm mb-2">
-                {product.title.substring(0, 12)}...
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <div
+              key={product.id}
+              className="h-[100%] w-[200px] md:w-[285px] rounded overflow-hidden shadow-lg border border-gray-400"
+            >
+              <div className="h-[250px] w-[190px] mx-auto">
+                <Image
+                  src={product.image}
+                  alt={product.title}
+                  width={100}
+                  height={100}
+                  layout="responsive"
+                />
               </div>
-              <p className="text-black text-xl font-bold pb-4">
-                ${product.price}
-              </p>
-              <Link
-                href={`/product-details/${product.id}`}
-                className="text-xl cursor-pointer font-medium border border-black rounded-lg p-2 hover:bg-orange-500 hover:text-white"
-              >
-                View Product
-              </Link>
+              <div className="px-6 py-4">
+                <div className="font-bold md:text-xl text-sm mb-2">
+                  {product.title.substring(0, 12)}...
+                </div>
+                <p className="text-black text-xl font-bold pb-4">
+                  ${product.price}
+                </p>
+                <Link
+                  href={`/product-details/${product.id}`}
+                  className="text-xl cursor-pointer font-medium border border-black rounded-lg p-2 hover:bg-orange-500 hover:text-white"
+                >
+                  View Product
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p>No products found in this category.</p>
+        )}
       </div>
     </>
   );

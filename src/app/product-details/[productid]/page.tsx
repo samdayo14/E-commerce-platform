@@ -1,9 +1,31 @@
+"use client";
+
 import Image from "next/image";
 import { fetchSingleProduct } from "@/app/utils/fetch-product";
 import Navbar from "@/app/components/navbar";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import { Product } from "../../utils/fetch-product";
 
-export default async function ProductDetails() {
-  const product = await fetchSingleProduct(10);
+export default function ProductDetails() {
+  const [product, setProduct] = useState<Product | null>(null);
+  const params = useParams();
+  const productid = params.productid;
+
+  useEffect(() => {
+    if (productid) {
+      const fetchProduct = async () => {
+        try {
+          const productData = await fetchSingleProduct(Number(productid));
+          setProduct(productData);
+        } catch (error) {
+          console.error("Failed to fetch product:", error);
+        }
+      };
+
+      fetchProduct();
+    }
+  }, [productid, params]);
 
   return (
     <>
