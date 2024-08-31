@@ -56,7 +56,7 @@ export default function ProductCard() {
       <h2 className="text-4xl text-orange-500 font-semibold text-center">
         Latest Product
       </h2>
-      <div className="flex gap-4 items-center justify-center mt-10">
+      <div className="flex md:gap-4 gap-2 justify-start overflow-x-auto mt-10 scrollbar-hide">
         {categories.map((cat) => (
           <button
             className={`text-lg font-semibold border-2 border-solid border-black py-2 px-4 text-center rounded-lg ${
@@ -70,11 +70,11 @@ export default function ProductCard() {
         ))}
       </div>
 
-      <div className="pt-7 grid md:grid-cols-4 grid-cols-2 md:gap-4 gap-2 text-center ml-6">
+      <div className="pt-7 grid-cols-2 grid md:grid-cols-2 md:ml-14 lg:grid-cols-4 md:gap-4 gap-2 text-center lg:ml-6">
         {filteredProducts.map((product) => (
           <div
             key={product.id}
-            className="h-[100%] md:w-[285px] w-[190px] rounded overflow-hidden shadow-lg border border-gray-400"
+            className="h-[100%] w-[200px] md:w-[285px] rounded overflow-hidden shadow-lg border border-gray-400"
           >
             <div className="h-[250px] w-[190px] mx-auto">
               <Image

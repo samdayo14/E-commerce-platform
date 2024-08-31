@@ -2,15 +2,15 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Input from "./input";
-import { addNewProduct } from "../utils/fetch-product";
 import { useProducts } from "../context/product-context";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ProductForm() {
   const { addProduct } = useProducts();
   const [formData, setFormData] = useState({
     title: "",
     price: "",
-    id: 0,
     category: "",
     description: "",
     image: "",
@@ -18,7 +18,7 @@ export default function ProductForm() {
       rate: 0,
     },
   });
-  const [image, setImage] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -34,25 +34,40 @@ export default function ProductForm() {
     const fileList = e.target.files;
     if (fileList && fileList.length > 0) {
       const file = fileList[0];
-      setImage(URL.createObjectURL(file));
+      const imageURL = URL.createObjectURL(file);
       setFormData((prevData) => ({
         ...prevData,
-        image: file.name,
+        image: imageURL, // Store the generated preview URL
       }));
+      setImagePreview(imageURL);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const newProduct = await addNewProduct(formData);
+    if (
+      !formData.title.trim() ||
+      !formData.price.trim() ||
+      !formData.category.trim() ||
+      !formData.description.trim() ||
+      !formData.image.trim()
+    ) {
+      toast.error("Please fill in all fields before submitting the form.");
 
-      addProduct({ ...formData, id: newProduct.id });
+      return;
+    }
+    try {
+      // Prepare the product data without id
+      const productWithoutId = {
+        ...formData,
+      };
+      // Add product using the modified addProduct
+
+      addProduct(productWithoutId);
 
       setFormData({
         title: "",
         price: "",
-        id: 0,
         category: "",
         description: "",
         image: "",
@@ -60,11 +75,13 @@ export default function ProductForm() {
           rate: 0,
         },
       });
-      setImage(null);
+      setImagePreview(null);
+      toast.success("Product added successfully!");
     } catch (error) {
       console.error("Failed to add product", error);
     }
   };
+
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
       <h2 className="text-xl font-semibold mb-4">Add / Edit Product</h2>
@@ -124,12 +141,12 @@ export default function ProductForm() {
             onChange={handleImageChange}
             className="input-style"
           />
-          {image && (
+          {imagePreview && (
             <div className="mt-2">
               <Image
                 width={200}
                 height={200}
-                src={image}
+                src={imagePreview}
                 alt="Preview"
                 className="object-cover rounded-md border border-gray-200 shadow-sm"
               />
@@ -143,6 +160,7 @@ export default function ProductForm() {
           Save Product
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 }
