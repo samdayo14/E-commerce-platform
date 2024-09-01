@@ -1,6 +1,5 @@
 import Navbar from "../components/navbar";
 import Image from "next/image";
-import ProductList from "../components/product-list";
 import { fetchProducts } from "@/app/utils/fetch-product";
 import { ProductProvider } from "../context/product-context";
 import ProductCard from "../components/product-card";
