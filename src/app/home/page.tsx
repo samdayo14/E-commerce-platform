@@ -1,14 +1,15 @@
 import Navbar from "../components/navbar";
 import Image from "next/image";
-import ProductCard from "../components/product-card";
+import ProductList from "../components/product-list";
 import { fetchProducts } from "@/app/utils/fetch-product";
-import { ProductsProvider } from "../context/product-context"; 
+import { ProductProvider } from "../context/product-context";
+import ProductCard from "../components/product-card";
 
 export default async function Home() {
   const products = await fetchProducts();
 
   return (
-    <ProductsProvider initialProducts={products}>
+    <ProductProvider initialProducts={products}>
       <div className="flex flex-col gap-5">
         <section className="bg-[#fcf8f5] pb-10">
           <Navbar />
@@ -40,6 +41,6 @@ export default async function Home() {
           <hr className="mt-4 text-bold text-red-900" />
         </section>
       </div>
-    </ProductsProvider>
+    </ProductProvider>
   );
 }

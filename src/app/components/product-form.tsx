@@ -37,7 +37,7 @@ export default function ProductForm() {
       const imageURL = URL.createObjectURL(file);
       setFormData((prevData) => ({
         ...prevData,
-        image: imageURL, // Store the generated preview URL
+        image: imageURL,
       }));
       setImagePreview(imageURL);
     }
@@ -84,7 +84,7 @@ export default function ProductForm() {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold mb-4">Add / Edit Product</h2>
+      <h2 className="text-xl font-semibold mb-4">Add New Product</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <Input

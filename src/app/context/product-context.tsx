@@ -23,6 +23,8 @@ export interface Product {
 interface ProductsContextProps {
   products: Product[];
   addProduct: (product: Omit<Product, "id">) => void;
+  deleteProduct: (id: number) => void;
+  editProduct: (product: Product) => void;
 }
 
 interface ProductsProviderProps {
@@ -42,7 +44,7 @@ export const useProducts = () => {
   return context;
 };
 
-export const ProductsProvider: React.FC<ProductsProviderProps> = ({
+export const ProductProvider: React.FC<ProductsProviderProps> = ({
   children,
   initialProducts = [],
 }) => {
@@ -86,8 +88,32 @@ export const ProductsProvider: React.FC<ProductsProviderProps> = ({
     });
   };
 
+  const deleteProduct = (id: number) => {
+    setProducts((prevProducts) => {
+      const updatedProducts = prevProducts.filter(
+        (product) => product.id !== id
+      );
+      console.log("Updating local storage with products:", updatedProducts);
+
+      localStorage.setItem("products", JSON.stringify(updatedProducts));
+      return updatedProducts;
+    });
+  };
+
+  const editProduct = (updatedProduct: Product) => {
+    setProducts((prevProducts) => {
+      const updatedProducts = prevProducts.map((product) =>
+        product.id === updatedProduct.id ? updatedProduct : product
+      );
+      localStorage.setItem("products", JSON.stringify(updatedProducts));
+      return updatedProducts;
+    });
+  };
+
   return (
-    <ProductsContext.Provider value={{ products, addProduct }}>
+    <ProductsContext.Provider
+      value={{ products, addProduct, deleteProduct, editProduct }}
+    >
       {children}
     </ProductsContext.Provider>
   );

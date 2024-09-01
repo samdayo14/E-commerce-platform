@@ -32,7 +32,6 @@ export default function ProductCard() {
     getCategories();
   }, []);
 
-  // Consolidate filtering logic into one effect
   useEffect(() => {
     if (selectedCategory === "All") {
       setFilteredProducts(products);
@@ -76,6 +75,7 @@ export default function ProductCard() {
             >
               <div className="h-[250px] w-[190px] mx-auto">
                 <Image
+                  className="lg:w-[200px] lg:h-[150px] mx-auto"
                   src={product.image}
                   alt={product.title}
                   width={100}
@@ -85,7 +85,7 @@ export default function ProductCard() {
               </div>
               <div className="px-6 py-4">
                 <div className="font-bold md:text-xl text-sm mb-2">
-                  {product.title.substring(0, 12)}...
+                  {product.title ? product.title.substring(0, 12) : "No title available"}...
                 </div>
                 <p className="text-black text-xl font-bold pb-4">
                   ${product.price}

@@ -31,8 +31,8 @@ export default function ProductDetails() {
     <>
       <Navbar />
       {product ? (
-        <div className="flex justify-between px-40 mb-20">
-          <div className="w-[50%]">
+        <div className="flex flex-col gap-10 md:flex-row justify-between px-10 md:px-10 lg:px-40 mb-20">
+          <div className="md:w-[40%] lg:w-[50%]">
             <Image
               key={product.id}
               src={product.image}
@@ -43,7 +43,7 @@ export default function ProductDetails() {
               className="rounded-lg"
             />
           </div>
-          <div className="flex flex-col gap-4 w-[30%]">
+          <div className="flex flex-col gap-4 md:w-[40%] lg:w-[30%]">
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-4">
@@ -53,7 +53,7 @@ export default function ProductDetails() {
                   <h3 className="text-2xl font-medium">{product.title}</h3>
                 </div>
                 <span className="text-lg text-gray-500">
-                  Rating {product.rating.rate} ⭐
+                  Rating {product.rating?.rate ?? 0} ⭐
                 </span>
               </div>
               <h1 className="font-semibold text-4xl">${product.price}</h1>

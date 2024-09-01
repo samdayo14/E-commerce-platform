@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar";
-import { ProductsProvider } from "./context/product-context";
+import { ProductProvider } from "./context/product-context";
 import { ReactNode } from "react";
 import { fetchProducts } from "./utils/fetch-product";
 
@@ -24,9 +24,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {/* <Navbar /> */}
-        <ProductsProvider initialProducts={products}>
-          {children}
-        </ProductsProvider>
+        <ProductProvider initialProducts={products}>{children}</ProductProvider>
       </body>
     </html>
   );

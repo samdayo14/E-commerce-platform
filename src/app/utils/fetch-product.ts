@@ -1,6 +1,3 @@
-// utils/fetchProducts.ts
-"use clients";
-
 export interface Product {
   id: number;
   title: string;
@@ -34,12 +31,6 @@ export async function fetchCategories() {
   return data;
 }
 
-// export async function fetchSingleProduct(id: number) {
-//   const res = await fetch(`https://fakestoreapi.com/products/${id}`);
-//   const data = await res.json();
-//   return data;
-// }
-
 export async function fetchSingleProduct(productId: number) {
   // Check local storage first
   const localProducts = JSON.parse(localStorage.getItem("products") || "[]");
@@ -64,6 +55,14 @@ export async function fetchSingleProduct(productId: number) {
   return productData;
 }
 
+export async function deleteProduct(id: number) {
+  const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
+    method: "DELETE",
+  });
+  const data = res.json();
+  return data;
+}
+
 export async function addNewProduct(form: AddProduct) {
   const res = await fetch("https://fakestoreapi.com/products", {
     method: "POST",
@@ -71,4 +70,16 @@ export async function addNewProduct(form: AddProduct) {
   });
   const data = res.json();
   return data;
+}
+
+export async function editProduct(id: number, updatedProduct: Product) {
+  const res = await fetch(`https://fakestoreapi.com/products/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedProduct),
+  });
+
+  return res.json();
 }
