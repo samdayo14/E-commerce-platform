@@ -5,7 +5,7 @@ interface FloatingLabelInputProps {
   type: string;
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
-  name?: string; // Make name optional
+  name?: string;
 }
 
 export default function FloatingLabelInput({
